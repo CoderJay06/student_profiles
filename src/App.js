@@ -3,7 +3,7 @@ import StudentProfiles from "./StudentProfiles";
 
 export default function App() {
   return (
-    <div class="App">
+    <div className="App">
       <StudentProfiles />
     </div>
   );
