@@ -1,9 +1,10 @@
 import React from "react";
+import StudentProfiles from "./StudentProfiles";
 
 export default function App() {
   return (
-    <div>
-      <h1>Student Profiles</h1>
+    <div class="App">
+      <StudentProfiles />
     </div>
   );
 }
