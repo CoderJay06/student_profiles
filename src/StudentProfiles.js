@@ -17,14 +17,16 @@ function StudentProfiles() {
     skill: "Oracle"
   */
   const getAverageGrade = (grades) => {
-    const gradeSum = grades.reduce((sum, grade) => sum + grade, 0);
-
-    return Math.floor(gradeSum / grades.length);
+    console.log(grades);
+    const gradeSum = grades.reduce((sum, grade) => sum + Number(grade), 0);
+    console.log("sum ", gradeSum);
+    return Math.floor(gradeSum / grades.length).toFixed(2);
   };
 
   const renderStudentProfiles = () =>
     studentProfiles.map((student) => (
       <Profile
+        key={student.id}
         img={student.pic}
         name={`${student.firstName} ${student.lastName}`}
         email={student.email}
@@ -40,12 +42,7 @@ function StudentProfiles() {
       .then(({ students }) => setStudentProfiles(students));
   }, []);
   console.log("sp: ", studentProfiles);
-  return (
-    <div className="student-profiles">
-      <h1>Student Profiles</h1>
-      {renderStudentProfiles()}
-    </div>
-  );
+  return <div className="student-profiles">{renderStudentProfiles()}</div>;
 }
 
 export default StudentProfiles;

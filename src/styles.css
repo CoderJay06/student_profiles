@@ -1,0 +1,54 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Raleway", sans-serif;
+}
+
+.student-profiles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100vw;
+  overflow-x: hidden;
+  margin: 0 auto;
+}
+
+.profile {
+  width: 100vw;
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  /* place-items: center; */
+  border-bottom: 0.1px solid rgb(48, 48, 48);
+  margin: 1em 0;
+}
+
+.profile-img-container {
+  margin: 0 auto;
+}
+
+.profile-info-container {
+}
+
+.profile-img {
+  border: 0.1px solid rgb(97, 96, 96);
+  border-radius: 50%;
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+}
+
+.profile-name {
+  font-size: 2.2rem;
+}
+
+.profile-info {
+  list-style-type: none;
+}
+
+.profile-info li {
+  word-wrap: break-word;
+}
+
+@media (min-width: 600px) {
+}
