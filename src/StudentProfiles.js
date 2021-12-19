@@ -1,30 +1,25 @@
 import React, { useState, useEffect } from "react";
 import Profile from "./Profile";
+import ProfileSearchBox from "./ProfileSearchBox";
 
 function StudentProfiles() {
   const [studentProfiles, setStudentProfiles] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
+  const [isSearchingByName, setIsSearchingByName] = useState(false);
   const studentsUrl = "https://api.hatchways.io/assessment/students";
 
-  /*
-    city: "Fushë-Muhurr"
-    company: "Yadel"
-    email: "iorton0@imdb.com"
-    firstName: "Ingaberg"
-    grades: Array(8)
-    id: "1"
-    lastName: "Orton"
-    pic: "https://storage.googleapis.com/hatchways-app.appspot.com/assessments/data/frontend/images/voluptasdictablanditiis.jpg"
-    skill: "Oracle"
-  */
+  const handleSearchInput = (e) => {
+    setIsSearchingByName(true);
+    setSearchInput(e.target.value);
+  };
+
   const getAverageGrade = (grades) => {
-    console.log(grades);
     const gradeSum = grades.reduce((sum, grade) => sum + Number(grade), 0);
-    console.log("sum ", gradeSum);
     return Math.floor(gradeSum / grades.length).toFixed(2);
   };
 
-  const renderStudentProfiles = () =>
-    studentProfiles.map((student) => (
+  const renderStudentProfiles = () => {
+    return studentProfiles.map((student) => (
       <Profile
         key={student.id}
         img={student.pic}
@@ -35,14 +30,48 @@ function StudentProfiles() {
         average={getAverageGrade(student.grades)}
       />
     ));
+  };
+
+  const filterNamesBySearchInput = () =>
+    studentProfiles.filter(
+      (student) =>
+        student.firstName.toLowerCase().includes(searchInput.toLowerCase()) ||
+        student.lastName.toLowerCase().includes(searchInput.toLowerCase())
+    );
+
+  const renderStudentProfilesByName = () => {
+    const studentProfilesByName = filterNamesBySearchInput();
+
+    return studentProfilesByName.map((student) => (
+      <Profile
+        key={student.id}
+        img={student.pic}
+        name={`${student.firstName} ${student.lastName}`}
+        email={student.email}
+        company={student.company}
+        skill={student.skill}
+        average={getAverageGrade(student.grades)}
+      />
+    ));
+  };
 
   useEffect(() => {
     fetch(studentsUrl)
       .then((res) => res.json())
       .then(({ students }) => setStudentProfiles(students));
   }, []);
-  console.log("sp: ", studentProfiles);
-  return <div className="student-profiles">{renderStudentProfiles()}</div>;
+
+  return (
+    <div className="student-profiles">
+      <ProfileSearchBox
+        setSearchInput={handleSearchInput}
+        searchInput={searchInput}
+      />
+      {isSearchingByName
+        ? renderStudentProfilesByName()
+        : renderStudentProfiles()}
+    </div>
+  );
 }
 
 export default StudentProfiles;
