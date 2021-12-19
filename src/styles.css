@@ -14,12 +14,21 @@ body {
   margin: 0 auto;
 }
 
+.profile-search-box {
+  border: none;
+  border-bottom: 1px solid #000;
+  width: 100vw;
+  font-family: "Raleway", sans-serif;
+  font-size: 1.2rem;
+  padding: 0.5em;
+}
+
 .profile {
   width: 100vw;
   display: grid;
   grid-template-columns: repeat(2, 50%);
   /* place-items: center; */
-  border-bottom: 0.1px solid rgb(48, 48, 48);
+  border-bottom: 0.1px solid rgb(187, 184, 184);
   margin: 1em 0;
 }
 
