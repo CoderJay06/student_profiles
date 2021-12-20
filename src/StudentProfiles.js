@@ -28,6 +28,7 @@ function StudentProfiles() {
         company={student.company}
         skill={student.skill}
         average={getAverageGrade(student.grades)}
+        grades={student.grades}
       />
     ));
   };
@@ -51,6 +52,7 @@ function StudentProfiles() {
         company={student.company}
         skill={student.skill}
         average={getAverageGrade(student.grades)}
+        grades={student.grades}
       />
     ));
   };
