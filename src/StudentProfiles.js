@@ -1,16 +1,26 @@
 import React, { useState, useEffect } from "react";
 import Profile from "./Profile";
 import ProfileSearchBox from "./ProfileSearchBox";
+import TagSearchBox from "./TagSearchBox";
 
 function StudentProfiles() {
   const [studentProfiles, setStudentProfiles] = useState([]);
-  const [searchInput, setSearchInput] = useState("");
+  const [profileSearchInput, setProfileSearchInput] = useState("");
   const [isSearchingByName, setIsSearchingByName] = useState(false);
+  const [tagSearchInput, setTagSearchInput] = useState("");
+  const [isSearchingByTag, setIsSearchingByTag] = useState(false);
+  // const [tags, setTags] = useState([]);
+
   const studentsUrl = "https://api.hatchways.io/assessment/students";
 
-  const handleSearchInput = (e) => {
+  const handleProfileSearchInput = (e) => {
     setIsSearchingByName(true);
-    setSearchInput(e.target.value);
+    setProfileSearchInput(e.target.value);
+  };
+
+  const handleTagSearchInput = (e) => {
+    setIsSearchingByTag(true);
+    setTagSearchInput(e.target.value);
   };
 
   const getAverageGrade = (grades) => {
@@ -29,6 +39,8 @@ function StudentProfiles() {
         skill={student.skill}
         average={getAverageGrade(student.grades)}
         grades={student.grades}
+        // tags={tags}
+        // setTags={setTags}
       />
     ));
   };
@@ -36,8 +48,12 @@ function StudentProfiles() {
   const filterNamesBySearchInput = () =>
     studentProfiles.filter(
       (student) =>
-        student.firstName.toLowerCase().includes(searchInput.toLowerCase()) ||
-        student.lastName.toLowerCase().includes(searchInput.toLowerCase())
+        student.firstName
+          .toLowerCase()
+          .includes(profileSearchInput.toLowerCase()) ||
+        student.lastName
+          .toLowerCase()
+          .includes(profileSearchInput.toLowerCase())
     );
 
   const renderStudentProfilesByName = () => {
@@ -53,6 +69,8 @@ function StudentProfiles() {
         skill={student.skill}
         average={getAverageGrade(student.grades)}
         grades={student.grades}
+        // tags={tags}
+        // setTags={setTags}
       />
     ));
   };
@@ -66,8 +84,12 @@ function StudentProfiles() {
   return (
     <div className="student-profiles">
       <ProfileSearchBox
-        setSearchInput={handleSearchInput}
-        searchInput={searchInput}
+        setSearchInput={handleProfileSearchInput}
+        searchInput={profileSearchInput}
+      />
+      <TagSearchBox
+        setSearchInput={handleTagSearchInput}
+        searchInput={tagSearchInput}
       />
       {isSearchingByName
         ? renderStudentProfilesByName()
