@@ -4,6 +4,8 @@ body {
   font-family: "Raleway", sans-serif;
 }
 
+/* Student profiles component */
+
 .student-profiles {
   display: flex;
   flex-direction: column;
@@ -14,7 +16,8 @@ body {
   margin: 0 auto;
 }
 
-.profile-search-box {
+.profile-search-box,
+.tag-search-box {
   border: none;
   border-bottom: 1px solid #000;
   width: 100vw;
@@ -22,6 +25,8 @@ body {
   font-size: 1.2rem;
   padding: 0.5em;
 }
+
+/* Profile component */
 
 .profile {
   width: 100vw;
@@ -75,6 +80,25 @@ body {
 
 .test-grade {
   margin-left: 1em;
+}
+
+.profile-tag-input {
+  border: none;
+  border-bottom: 1px solid #000;
+  width: 100%;
+  font-family: "Raleway", sans-serif;
+  font-size: 1.2rem;
+  padding: 0.5em;
+}
+
+.tag {
+  display: inline-block;
+  padding: 0.2em;
+  background: lightgray;
+  width: 25%;
+  text-align: center;
+  margin: 0.2em;
+  border-radius: 15%;
 }
 
 @media (min-width: 600px) {
