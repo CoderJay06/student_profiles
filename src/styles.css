@@ -26,7 +26,7 @@ body {
 .profile {
   width: 100vw;
   display: grid;
-  grid-template-columns: repeat(2, 50%);
+  grid-template-columns: 40% 40% 20%;
   /* place-items: center; */
   border-bottom: 0.1px solid rgb(187, 184, 184);
   margin: 1em 0;
@@ -57,6 +57,24 @@ body {
 
 .profile-info li {
   word-wrap: break-word;
+}
+
+.test-grades-btn {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+.test-grades-list {
+  list-style-type: none;
+}
+
+.test-grade {
+  margin-left: 1em;
 }
 
 @media (min-width: 600px) {
