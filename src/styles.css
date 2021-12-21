@@ -41,14 +41,11 @@ body {
   margin: 0 auto;
 }
 
-.profile-info-container {
-}
-
 .profile-img {
   border: 0.1px solid rgb(97, 96, 96);
   border-radius: 50%;
-  width: 80%;
-  height: 80%;
+  width: 10em;
+  height: 10em;
   object-fit: contain;
 }
 
@@ -101,5 +98,5 @@ body {
   border-radius: 15%;
 }
 
-@media (min-width: 600px) {
-}
+/* @media (min-width: 600px) {
+} */
