@@ -3,13 +3,13 @@ import TestGradesList from "./TestGradesList";
 import TagsList from "./TagsList";
 
 function Profile({ img, name, email, company, skill, average, grades }) {
-  const [gradesListOpen, setGradesListOpen] = useState(false);
+  const [isGradesListOpen, setIsGradesListOpen] = useState(false);
   const [tag, setTag] = useState("");
   const [tags, setTags] = useState([]);
 
   const handleGradesListClick = () => {
     if (grades.length >= 1) {
-      setGradesListOpen((prevState) => !prevState);
+      setIsGradesListOpen((prevState) => !prevState);
     }
   };
 
@@ -46,11 +46,11 @@ function Profile({ img, name, email, company, skill, average, grades }) {
             />
           </li>
         </ul>
-        {gradesListOpen ? <TestGradesList grades={grades} /> : null}
+        {isGradesListOpen ? <TestGradesList grades={grades} /> : null}
       </div>
       <div className="profile-btn-container">
         <button className="test-grades-btn" onClick={handleGradesListClick}>
-          {gradesListOpen ? "➖" : "➕"}
+          {isGradesListOpen ? "➖" : "➕"}
         </button>
       </div>
     </div>

@@ -4,23 +4,39 @@ import ProfileSearchBox from "./ProfileSearchBox";
 import TagSearchBox from "./TagSearchBox";
 
 function StudentProfiles() {
-  const [studentProfiles, setStudentProfiles] = useState([]);
-  const [profileSearchInput, setProfileSearchInput] = useState("");
+  const [allStudentProfiles, setAllStudentProfiles] = useState([]);
+  const [studentProfilesByName, setStudentProfilesByName] = useState([]);
+  const [nameSearchInput, setNameSearchInput] = useState("");
   const [isSearchingByName, setIsSearchingByName] = useState(false);
-  const [tagSearchInput, setTagSearchInput] = useState("");
-  const [isSearchingByTag, setIsSearchingByTag] = useState(false);
-  // const [tags, setTags] = useState([]);
 
   const studentsUrl = "https://api.hatchways.io/assessment/students";
 
-  const handleProfileSearchInput = (e) => {
-    setIsSearchingByName(true);
-    setProfileSearchInput(e.target.value);
-  };
+  useEffect(() => {
+    fetch(studentsUrl)
+      .then((res) =>
+        !res.ok ? alert(`Fetch error. Status: ${res.status}`) : res.json()
+      )
+      .then(({ students }) => setAllStudentProfiles(students))
+      .catch((error) => alert(error.message));
+  }, []);
 
-  const handleTagSearchInput = (e) => {
-    setIsSearchingByTag(true);
-    setTagSearchInput(e.target.value);
+  // Input Validation
+  const isOnlyLetters = (nameInput) => /[a-zA-Z]/.test(nameInput) === true;
+
+  const doesNameMatch = (student) =>
+    student.firstName.toLowerCase().includes(nameSearchInput.toLowerCase()) ||
+    student.lastName.toLowerCase().includes(nameSearchInput.toLowerCase());
+
+  const filterProfilesByNameInput = () =>
+    allStudentProfiles.filter((student) => doesNameMatch(student));
+
+  const handleNameSearchInput = (e) => {
+    const { value } = e.target;
+    setIsSearchingByName(true);
+    setNameSearchInput(value);
+    if (isOnlyLetters(nameSearchInput)) {
+      setStudentProfilesByName(filterProfilesByNameInput());
+    }
   };
 
   const getAverageGrade = (grades) => {
@@ -28,7 +44,7 @@ function StudentProfiles() {
     return Math.floor(gradeSum / grades.length).toFixed(2);
   };
 
-  const renderStudentProfiles = () => {
+  const render = (studentProfiles) => {
     return studentProfiles.map((student) => (
       <Profile
         key={student.id}
@@ -39,61 +55,20 @@ function StudentProfiles() {
         skill={student.skill}
         average={getAverageGrade(student.grades)}
         grades={student.grades}
-        // tags={tags}
-        // setTags={setTags}
       />
     ));
   };
-
-  const filterNamesBySearchInput = () =>
-    studentProfiles.filter(
-      (student) =>
-        student.firstName
-          .toLowerCase()
-          .includes(profileSearchInput.toLowerCase()) ||
-        student.lastName
-          .toLowerCase()
-          .includes(profileSearchInput.toLowerCase())
-    );
-
-  const renderStudentProfilesByName = () => {
-    const studentProfilesByName = filterNamesBySearchInput();
-
-    return studentProfilesByName.map((student) => (
-      <Profile
-        key={student.id}
-        img={student.pic}
-        name={`${student.firstName} ${student.lastName}`}
-        email={student.email}
-        company={student.company}
-        skill={student.skill}
-        average={getAverageGrade(student.grades)}
-        grades={student.grades}
-        // tags={tags}
-        // setTags={setTags}
-      />
-    ));
-  };
-
-  useEffect(() => {
-    fetch(studentsUrl)
-      .then((res) => res.json())
-      .then(({ students }) => setStudentProfiles(students));
-  }, []);
 
   return (
     <div className="student-profiles">
       <ProfileSearchBox
-        setSearchInput={handleProfileSearchInput}
-        searchInput={profileSearchInput}
+        setSearchInput={handleNameSearchInput}
+        searchInput={nameSearchInput}
       />
-      <TagSearchBox
-        setSearchInput={handleTagSearchInput}
-        searchInput={tagSearchInput}
-      />
-      {isSearchingByName
-        ? renderStudentProfilesByName()
-        : renderStudentProfiles()}
+      <TagSearchBox />
+      {isSearchingByName && isOnlyLetters(nameSearchInput)
+        ? render(studentProfilesByName)
+        : render(allStudentProfiles)}
     </div>
   );
 }
