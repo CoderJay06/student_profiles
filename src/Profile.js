@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import TestGradesList from "./TestGradesList";
 import TagsList from "./TagsList";
 
-function Profile({ img, name, email, company, skill, average, grades }) {
+function Profile(props) {
   const [isGradesListOpen, setIsGradesListOpen] = useState(false);
   const [tag, setTag] = useState("");
   const [tags, setTags] = useState([]);
 
   const handleGradesListClick = () => {
-    if (grades.length >= 1) {
+    if (props.grades.length >= 1) {
       setIsGradesListOpen((prevState) => !prevState);
     }
   };
@@ -25,15 +25,14 @@ function Profile({ img, name, email, company, skill, average, grades }) {
   return (
     <div className="profile">
       <div className="profile-img-container">
-        <img className="profile-img" src={img} alt={name} />
+        <img className="profile-img" src={props.img} alt={props.name} />
       </div>
       <div className="profile-info-container">
         <ul className="profile-info">
-          <h1 className="profile-name">{name}</h1>
-          <li className="email">Email: {email}</li>
-          <li className="company">Company: {company}</li>
-          <li className="skill">Skill: {skill}</li>
-          <li className="average">Average: {average}%</li>
+          <h1 className="profile-name">{props.name}</h1>
+          <li className="email">Email: {props.company}</li>
+          <li className="skill">Skill: {props.skill}</li>
+          <li className="average">Average: {props.average}%</li>
           {tags.length >= 1 ? <TagsList tags={tags} /> : null}
           <li>
             <input
@@ -46,7 +45,7 @@ function Profile({ img, name, email, company, skill, average, grades }) {
             />
           </li>
         </ul>
-        {isGradesListOpen ? <TestGradesList grades={grades} /> : null}
+        {isGradesListOpen ? <TestGradesList grades={props.grades} /> : null}
       </div>
       <div className="profile-btn-container">
         <button className="test-grades-btn" onClick={handleGradesListClick}>
