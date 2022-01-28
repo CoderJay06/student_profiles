@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import TestGradesList from "./TestGradesList";
 import TagsList from "./TagsList";
 
-function Profile(props) {
+function Profile({ student }) {
   const [isGradesListOpen, setIsGradesListOpen] = useState(false);
   const [tag, setTag] = useState("");
   const [tags, setTags] = useState([]);
 
   const handleGradesListClick = () => {
-    if (props.grades.length >= 1) {
+    if (student.grades.length >= 1) {
       setIsGradesListOpen((prevState) => !prevState);
     }
   };
@@ -22,17 +22,26 @@ function Profile(props) {
     }
   };
 
+  const getAverageGrade = (grades) => {
+    const gradeSum = grades.reduce((sum, grade) => sum + Number(grade), 0);
+    return Math.floor(gradeSum / grades.length).toFixed(2);
+  };
+
   return (
     <div className="profile">
       <div className="profile-img-container">
-        <img className="profile-img" src={props.img} alt={props.name} />
+        <img className="profile-img" src={student.pic} alt={student.name} />
       </div>
       <div className="profile-info-container">
         <ul className="profile-info">
-          <h1 className="profile-name">{props.name}</h1>
-          <li className="email">Email: {props.company}</li>
-          <li className="skill">Skill: {props.skill}</li>
-          <li className="average">Average: {props.average}%</li>
+          <h1 className="profile-name">
+            {student.firstName} {student.lastName}
+          </h1>
+          <li className="email">Email: {student.company}</li>
+          <li className="skill">Skill: {student.skill}</li>
+          <li className="average">
+            Average: {getAverageGrade(student.grades)}%
+          </li>
           {tags.length >= 1 ? <TagsList tags={tags} /> : null}
           <li>
             <input
@@ -45,7 +54,7 @@ function Profile(props) {
             />
           </li>
         </ul>
-        {isGradesListOpen ? <TestGradesList grades={props.grades} /> : null}
+        {isGradesListOpen ? <TestGradesList grades={student.grades} /> : null}
       </div>
       <div className="profile-btn-container">
         <button className="test-grades-btn" onClick={handleGradesListClick}>

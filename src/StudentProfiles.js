@@ -17,7 +17,7 @@ function StudentProfiles() {
         !res.ok ? alert(`Fetch error. Status: ${res.status}`) : res.json()
       )
       .then(({ students }) => setAllStudentProfiles(students))
-      .catch((error) => alert(error.message));
+      .catch((error) => console.log(error.message));
   }, []);
 
   // Input Validation
@@ -39,23 +39,9 @@ function StudentProfiles() {
     }
   };
 
-  const getAverageGrade = (grades) => {
-    const gradeSum = grades.reduce((sum, grade) => sum + Number(grade), 0);
-    return Math.floor(gradeSum / grades.length).toFixed(2);
-  };
-
   const render = (studentProfiles) => {
     return studentProfiles.map((student) => (
-      <Profile
-        key={student.id}
-        img={student.pic}
-        name={`${student.firstName} ${student.lastName}`}
-        email={student.email}
-        company={student.company}
-        skill={student.skill}
-        average={getAverageGrade(student.grades)}
-        grades={student.grades}
-      />
+      <Profile key={student.id} student={student} />
     ));
   };
 
